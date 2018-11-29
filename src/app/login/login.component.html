@@ -1,0 +1,45 @@
+<div class="login">
+  <div class="container">
+    <div class="col-lg-6 col-lg-offset-3">
+
+      <div class="inner-form">
+
+        <h1>LOGIN</h1>
+
+        <form  #loginForm="ngForm" class="well" (submit)="onSubmit(loginForm)" novalidate>
+          <div class="row">
+
+            <div class="col-lg-12">
+              <div class="form-group">
+                <label>username</label>
+                <input type="text" name="username" class="form-control" placeholder="Username" required ngModel>
+              </div>
+            </div>
+
+            <div class="col-lg-12">
+              <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" class="form-control" placeholder="Password" required ngModel>
+              </div>
+            </div>
+
+            <div class="col-lg-12">
+              <div>
+                <input class="btn btn-default btn-block" type="submit" value="Send">
+              </div>
+            </div>
+
+            <div class="col-lg-12">
+              <div class="forgot">
+                <p>Forgot Password or Email ?</p>
+              </div>
+            </div>
+
+          </div>
+        </form>
+
+      </div> <!-- inner-form -->
+
+    </div>
+  </div>
+</div>

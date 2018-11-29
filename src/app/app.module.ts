@@ -1,19 +1,27 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {Routes, RouterModule} from "@angular/router";
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { Component } from './.component';
-import { FourOhFourComponent } from './FourOhFour/FourOhFour.component';
-import { FourOhFour_Component } from './FourOhFour_/FourOhFour_.component';
+import { FourOhFourComponent } from './four-oh-four/four-oh-four.component';
+import { LoginComponent } from './login/login.component';
+
+import { AuthServiceService } from './services/AuthService.service';
+import { AuthInterceptorService } from './services/AuthInterceptor.service';
+
 
 const appRoutes : Routes = [
-    { path: 'home', component: WelcomeComponent },
+    {path: 'shome', component :WelcomeComponent},
+    { path: 'not-found', component: FourOhFourComponent },
+    { path: 'login', component: LoginComponent },
     { path: '**', redirectTo: '/not-found' }
-];
+    ];
+
 
 @NgModule({
    declarations: [
@@ -22,13 +30,20 @@ const appRoutes : Routes = [
       FooterComponent,
       WelcomeComponent,
       FourOhFourComponent,
-      Component,
-      FourOhFour_Component
+      LoginComponent
    ],
    imports: [
-      BrowserModule
+      BrowserModule,
+      FormsModule,
+      HttpClientModule,
+      HttpModule,
+      ReactiveFormsModule,
+      RouterModule.forRoot(appRoutes)
    ],
-   providers: [],
+   providers: [ 
+                AuthServiceService,
+                AuthInterceptorService
+             ],
    bootstrap: [
       AppComponent
    ]
