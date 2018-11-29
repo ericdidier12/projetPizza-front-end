@@ -16,9 +16,10 @@ import { AuthInterceptorService } from './services/AuthInterceptor.service';
 
 
 const appRoutes : Routes = [
-    {path: 'shome', component :WelcomeComponent},
+    {path: 'home', component :WelcomeComponent},
     { path: 'not-found', component: FourOhFourComponent },
     { path: 'login', component: LoginComponent },
+    { path: 'not-found', component: FourOhFourComponent },
     { path: '**', redirectTo: '/not-found' }
     ];
 
