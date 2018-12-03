@@ -9,18 +9,17 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { FourOhFourComponent } from './four-oh-four/four-oh-four.component';
-import { LoginComponent } from './login/login.component';
 import { AuthService } from './services/auth.service';
 import { AuthInterceptor } from './services/auth.interceptor';
-
-
+import { PizzaModule } from './pizza/pizza.module';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 
 
 const appRoutes : Routes = [
     {path: 'home', component :WelcomeComponent},
+    {path: '', component :WelcomeComponent},
     { path: 'not-found', component: FourOhFourComponent },
-    { path: 'login', component: LoginComponent },
     { path: 'not-found', component: FourOhFourComponent },
     { path: '**', redirectTo: '/not-found' }
     ];
@@ -33,7 +32,7 @@ const appRoutes : Routes = [
       FooterComponent,
       WelcomeComponent,
       FourOhFourComponent,
-      LoginComponent,
+
    ],
    imports: [
       BrowserModule,
@@ -42,7 +41,9 @@ const appRoutes : Routes = [
       HttpModule,
       FormsModule,
       ReactiveFormsModule,
-      RouterModule.forRoot(appRoutes)
+      RouterModule.forRoot(appRoutes),
+      PizzaModule,
+      AuthenticationModule
    ],
    providers: [
     AuthService,
