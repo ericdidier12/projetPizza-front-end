@@ -1,7 +1,8 @@
+import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { AuthServiceService } from '../services/AuthService.service';
-import { Router } from '@angular/router';
 import {NgForm} from "@angular/forms";
+
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -9,8 +10,8 @@ import {NgForm} from "@angular/forms";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-  constructor(private authService: AuthServiceService, private router: Router) { }
+  mode:number = 0 ;
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.authService.connectedUser.subscribe(
@@ -21,12 +22,16 @@ export class LoginComponent implements OnInit {
       });
   }
 
-  public onSubmit(loginForm: NgForm):void {
+  public onLogin(loginForm: NgForm):void {
     if(loginForm.valid) {
-      this.authService.login(loginForm.value) ;  
-          this.router.navigate(['home']);
-        }  
+      this.authService.login(loginForm.value).subscribe(
+        res => {
+          this.router.navigate(['']);
+        },
+        err=>{
+           this.mode = 1;
+        });
     }
-  
+  }
 
 }

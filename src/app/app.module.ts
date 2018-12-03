@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {Routes, RouterModule} from "@angular/router";
 import { AppComponent } from './app.component';
@@ -10,9 +10,11 @@ import { FooterComponent } from './footer/footer.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { FourOhFourComponent } from './four-oh-four/four-oh-four.component';
 import { LoginComponent } from './login/login.component';
+import { AuthService } from './services/auth.service';
+import { AuthInterceptor } from './services/auth.interceptor';
 
-import { AuthServiceService } from './services/AuthService.service';
-import { AuthInterceptorService } from './services/AuthInterceptor.service';
+
+
 
 
 const appRoutes : Routes = [
@@ -31,20 +33,25 @@ const appRoutes : Routes = [
       FooterComponent,
       WelcomeComponent,
       FourOhFourComponent,
-      LoginComponent
+      LoginComponent,
    ],
    imports: [
       BrowserModule,
       FormsModule,
       HttpClientModule,
       HttpModule,
+      FormsModule,
       ReactiveFormsModule,
       RouterModule.forRoot(appRoutes)
    ],
-   providers: [ 
-                AuthServiceService,
-                AuthInterceptorService
-             ],
+   providers: [
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi:true
+    },
+   ],
    bootstrap: [
       AppComponent
    ]
