@@ -1,0 +1,80 @@
+<h1>SIGN UP</h1>
+<div ng-app="sample">
+  <form class="form-horizontal" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+
+      <div class="form-group col-md-6">
+          <label class="col-md-3 control-label" for="nom">Nom</label>
+          <div class="col-md-6">
+            <input class="form-control" id="nom" type="text" placeholder="nom"  formControlName="nom" 
+            [ngClass]="{'is-invalid' : ( f.nom.touched || f.nom.dirty || submitted ) && f.nom.errors }"/>
+            <div *ngIf="submitted || f.nom.errors" class="invalid-feedback">
+                <div *ngIf="f.nom.errors.required">Nom is required</div>
+            </div>
+          </div>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label class="col-md-3 control-label" for="email">Email</label>
+        <div class="col-md-6">
+          <input class="form-control" id="email" type="email"  placeholder="email" formControlName="email" 
+          [ngClass]="{'is-invalid' : ( f.email.touched || f.email.dirty || submitted ) && f.email.errors }"/>
+          <div *ngIf="submitted || f.email.errors" class="invalid-feedback">
+              <div *ngIf="f.email.errors.required">Email is required</div>
+              <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group col-md-6">
+          <label class="col-md-3 control-label" for="Login">Login</label>
+          <div class="col-md-6">
+            <input class="form-control" id="login" type="text"  placeholder="login" value="Mark" formControlName="login" 
+             [ngClass]="{'is-invalid' : ( f.login.touched || f.login.dirty || submitted ) && f.login.errors }"/>
+            <div *ngIf="submitted || f.login.errors" class="invalid-feedback">
+                <div *ngIf="f.login.errors.required">Login is required</div>
+                <div *ngIf="f.login.errors.minlength">Login must be at least 4 characters</div>
+            </div>
+          </div>
+      </div>
+
+      <div class="form-group col-md-6">
+          <label class="col-md-3 control-label" for="adress">Adresse</label>
+          <div class="col-md-6">
+            <input class="form-control" id="adress" type="text"  placeholder="adress" formControlName="adress"
+            [ngClass]="{'is-invalid' : ( f.adress.touched || f.adress.dirty || submitted ) && f.adress.errors }"/>
+            <div *ngIf="submitted || f.adress.errors" class="invalid-feedback">
+                <div *ngIf="f.adress.errors.required">Adress is required</div>
+            </div>
+          </div>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label class="col-md-3 control-label" for="password">Password</label>
+        <div class="col-md-6">
+          <input class="form-control" id="password" type="password" placeholder="password"  formControlName="password"
+          [ngClass]="{'is-invalid' : ( f.password.touched || f.password.dirty || submitted ) && f.password.errors }"/>
+          <div *ngIf="submitted || f.password.errors" class="invalid-feedback">
+              <div *ngIf="f.password.errors.required">password is required</div>
+              <div *ngIf="f.password.errors.minlength">password must be at least 6 characters</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group col-md-6 ">
+          <label class="col-md-3 control-label" for="date">Date de Naissance</label>
+          <div class="col-md-6">
+            <input class="form-control" id="date" type="date" placeholder="date" formControlName="date" />
+          </div>
+      </div>
+
+
+
+      <div class="form-group col-md-12">
+        <div class="col-md-offset-3 col-md-9">
+          <input type="submit" class="btn btn-default" value="Sign Up" />
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
