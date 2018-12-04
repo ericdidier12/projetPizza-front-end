@@ -20,7 +20,6 @@ const appRoutes : Routes = [
     {path: 'home', component :WelcomeComponent},
     {path: '', component :WelcomeComponent},
     { path: 'not-found', component: FourOhFourComponent },
-    { path: 'not-found', component: FourOhFourComponent },
     { path: '**', redirectTo: '/not-found' }
     ];
 

@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
-import { UserInscription } from 'src/app/models/userInscription';
+import { InscriptionService } from 'src/app/services/inscription.service';
+import { Router } from '@angular/router';
+import { UserInscription } from 'src/app/models/user-inscription';
+import { pipe } from '@angular/core/src/render3';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-inscription',
@@ -12,29 +16,28 @@ export class InscriptionComponent implements OnInit {
   signUpForm: FormGroup;
   submitted = false;
 
-  user: any[]=[{
-    nom: '',
+  user: UserInscription ={
+    name: '',
     email: '',
-    Login: '',
+    username: '',
     adress:'',
     password: '',
-    date:'',
+    birth_date:'',
+  };
 
-  
-  }];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private service: InscriptionService, private router: Router) {
    }
 
   ngOnInit() {
 
     this.signUpForm = this.fb.group({
-      nom: ['', Validators.required],
+      name: ['', Validators.required],
       email: ['',[Validators.required, Validators.email]],
-      login: ['', [Validators.required, Validators.minLength(4)]],
+      username: ['', [Validators.required, Validators.minLength(4)]],
       adress: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(4)]], 
-      date: [''],
+      birth_date: [''],
 
      
     });
@@ -43,25 +46,7 @@ export class InscriptionComponent implements OnInit {
       //getter pour acces plus facile
       get f() { return this.signUpForm.controls; }
 
-  saveForm() {
 
-    const fromvalue = this.signUpForm.value;
-    const newUser = new UserInscription(
-      fromvalue['nom'],
-      fromvalue['email'],
-      fromvalue['login'],
-      fromvalue['adress'],
-      fromvalue['password'],
-      fromvalue['date'],
-      ) ;
-    
-    //console.log(signup.form);
-    //console.log("Saved : " + JSON.stringify(signup.value));
-  }
-  saveForms(signup: NgForm): void {
-    console.log(signup.form);
-    console.log("Saved : " + JSON.stringify(signup.value));
-  }
 
   onSubmit() {
     this.submitted = true;
@@ -71,6 +56,19 @@ export class InscriptionComponent implements OnInit {
         return;
     }
 
-    alert('Parfait !')
+    this.user.name = this.signUpForm.get('name').value;
+    this.user.email = this.signUpForm.get('email').value;
+    this.user.username = this.signUpForm.get('username').value;
+    this.user.adress = this.signUpForm.get('adress').value;
+    this.user.password = this.signUpForm.get('password').value;
+    this.user.birth_date =new Date(this.signUpForm.get('birth_date').value).toISOString().substring(0,10);
+    // this.signUpForm.get('date').value;
+    console.log(this.user);
+
+    this.service.attemptSignup(this.user.username, this.user.password, this.user.name, this.user.email, this.user.adress, this.user.adress)
+    .pipe(first()).subscribe(data => { console.log("user inscrit" +data)}
+    );
+      // alert('SUCCESS')
+      // this.router.navigate(['home']);
 }
 }
