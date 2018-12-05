@@ -1,6 +1,6 @@
 <!-- Navigation -->
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
     <a class="navbar-brand" routeLink="home">Logo</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
       aria-expanded="false" aria-label="Toggle navigation">
@@ -23,33 +23,37 @@
         </li>
 
         <li class="nav-item" >
-          <a class="nav-link" routerLinkActive='active' routerLink="/pizzas">Pizza</a>
+          <a class="nav-link" routerLink="/pizzas">Pizza</a>
         </li>
 
 
         <li class="nav-item">
           <a class="nav-link" href="#">Cart</a>
         </li>
-
+        &nbsp;
+        &nbsp;
+        &nbsp;
         <li class="nav-item">
-          <button type="button" class="btn btn-dark"><a href="#">FR</a></button>
-
+            <a href="#"><img src="assets/image/fr.png"></a>
+            &nbsp;
         </li>
         <li class="nav-item">
-          <button type="button" class="btn btn-dark"><a href="#">EN</a></button>
+            <a href="#"><img src="assets/image/uk.png"></a>
         </li>
+
 
         <!--Debut sing-In and sing up-->
         <ng-container *ngIf="!connecterUser"> 
+
+        &nbsp;
+
         <li class="nav-item" routerLinkActive="active">
           <a routerLink="login">
-            <button type="button" class="btn"> Sign In</button>
+            <button type="button" class="btn btn-outline-info"> Sign In</button>
           </a>
         </li>
         &nbsp;
-        <li class="nav-item"> 
-            <button type="button" class="btn"> Sign up</button>   
-        </li>  
+
       </ng-container>
      <!-- Fin sing-In and sing up-->
       
@@ -58,6 +62,13 @@
         <a href="#" (click)="logout()">Logout ({{connecterUser.username}})</a>
       </li>
     </ng-container>
+
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="inscription"> 
+            <button type="button" class="btn btn-outline-info"> Sign up</button> 
+          </a>  
+        </li>
+
       </ul>
     </div>
 
