@@ -1,27 +1,25 @@
 <div class=" row col-md-9 col-md-offset-3">
 
-    <div class=" alert alert-danger" *ngIf="mode==1">
-      <strong>Bad credentials !</strong> Invalid username or password
+  <div class=" alert alert-danger" *ngIf="mode==1">
+    <strong>Bad credentials !</strong> Invalid username or password
+  </div>
+  <!-- Default form login -->
+  <form #f="ngForm" (submit)="onLogins(f)" novalidate class="text-center border border-light p-5">
+    <div class="form-row">
+      <p class="h4 mb-4">Sign in</p>
+      <!-- username -->
+      <input type="text" id="username" class="form-control mb-4" placeholder="username" name="username" ngModel
+        required>
+      <!-- Password -->
+      <input type="password" id="password" class="form-control mb-4" placeholder="password" name="password" ngModel
+        required>
+      <!-- Sign in button -->
+      <input type="text" class="btn btn-info btn-block my-4" [disabled]="f.invalid" type="submit" />
+      <!-- Register -->
+      <p> <span> Not a member ? </span>
+        <a routerLink="new-user">Register</a>
+      </p>
     </div>
-    <!-- Default form login -->
-    <form #f="ngForm" (submit)="onLogin(f)" novalidate class="text-center border border-light p-5">
-      <div class="form-row">
-        <p class="h4 mb-4">Sign in</p>
-        <!-- username -->
-        <input type="text" id="username" class="form-control mb-4" placeholder="username" name="username" ngModel
-          required>
-        <!-- Password -->
-        <input type="password" id="password" class="form-control mb-4" placeholder="password" name="password" ngModel
-          required>
-        <!-- Sign in button -->
-        <input type="text" class="btn btn-info btn-block my-4" [disabled]="f.invalid" type="submit" />
-        <!-- Register -->
-        <p> <span> Not a member ? </span>
-          <a  routerLink="new-user">Register</a>
-        </p>
-      </div>
-    </form> 
+  </form>
   <!-- Default form login -->
 </div>
-
-

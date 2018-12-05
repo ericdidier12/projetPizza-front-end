@@ -21,6 +21,20 @@ export class LoginComponent implements OnInit {
         }
       });
   }
+  
+  public onLogins(loginForm :NgForm){
+      console.log("affiche les données soumis"+ loginForm.value);
+      this.authService.logins(loginForm.value).subscribe(
+        res => {
+          this.router.navigate(['']);
+        },
+        err=>{
+           this.mode = 1;
+        });
+    
+  }
+
+
 
   public onLogin(loginForm: NgForm):void {
     if(loginForm.valid) {
@@ -35,3 +49,4 @@ export class LoginComponent implements OnInit {
   }
 
 }
+

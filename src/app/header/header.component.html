@@ -35,20 +35,37 @@
         <li class="nav-item">
             <a href="#"><img src="assets/image/uk.png"></a>
         </li>
+
         <a class="btn btn-success btn-sm ml-3" routerLink="shoppingCart">
             <i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
             &nbsp;
             <span class="badge badge-light">3</span>
         </a>
 
+
+
+        <!--Debut sing-In and sing up-->
+        <ng-container *ngIf="!connecterUser"> 
+
+
         &nbsp;
-        &nbsp;
+
         <li class="nav-item" routerLinkActive="active">
           <a routerLink="login">
             <button type="button" class="btn btn-outline-info"> Sign In</button>
           </a>
         </li>
         &nbsp;
+
+      </ng-container>
+     <!-- Fin sing-In and sing up-->
+      
+    <ng-container *ngIf="connecterUser">
+      <li>
+        <a href="#" (click)="logout()">Logout ({{connecterUser.username}})</a>
+      </li>
+    </ng-container>
+
         <li class="nav-item" routerLinkActive="active">
           <a routerLink="inscription"> 
             <button type="button" class="btn btn-outline-info"> Sign up</button> 

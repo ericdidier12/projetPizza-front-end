@@ -1,45 +1,62 @@
 <div class="container">
-    <br/><br/>
-  <div class="row">
+    <br /><br />
+    <div class="row">
+        <div class="col-lg-12 my-3">
+            <div class="pull-right">
+                <div class="btn-group">
+                    <div class="form-group">
+                        <label for="drinkPreference">Pizza of category</label>
+                        <select id="drinkPreference" class="form-control" formControlName="drinkPreference">
+                            <option value="jus d\'orange">Jus d'orange</option>
+                            <option value="jus de mangue">Jus de mangue</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-info" id="list">
+                        List View
+                    </button>
+                    <button class="btn btn-danger" id="grid">
+                        Grid View
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="products" class="row view-group">
+        <div class="item col-xs-4 col-lg-4" *ngFor="let p of listPizza">
+            <div *ngIf="p.fixed == true">
+                <br />
+                <div class="thumbnail card">
+                    <div class="img-event">
+                        <img class="group list-group-image img-fluid" src="assets/image/imagePiza.jpg" alt="" />
+                    </div>
+                    <div class="caption card-body">
+                        <h4 class="group card-title inner list-group-item-heading">
+                            {{p.name}}</h4>
+                        <p class="group inner list-group-item-text">
+                            <strong><u>Ingredients</u></strong>
+                            <div *ngFor="let ingredient of p.ingredients">
+                                <p class="card-text"> {{ingredient.name}},</p>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <p class="lead">
+                                        {{p.price}} <span>€</span></p>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <a class="btn btn-success" href=#>Add to cart</a>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-      <div class="col-lg-12 my-3">
-          <div class="pull-right">
-              <div class="btn-group">
-                  <button class="btn btn-info" id="list">
-                      Pizza Classique
-                  </button>
-                  <button class="btn btn-danger" id="grid">
-                      Pizza Custom
-                  </button>
-              </div>
-          </div>
-      </div>
-  </div> 
-  <div id="products" class="row view-group">
-              <div class="item col-xs-4 col-lg-4"*ngFor="let p of listPizza">
-                  <br/>
-                  <div class="thumbnail card">
-                      <div class="img-event">
-                          <img class="group list-group-image img-fluid" src="assets/image/imagePiza.jpg" alt="" />
-                      </div>
-                      <div class="caption card-body">
-                          <h4 class="group card-title inner list-group-item-heading">
-                              {{p.name}}</h4>
-                          <p class="group inner list-group-item-text">
-                              Product description... Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                              sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-                          <div class="row">
-                              <div class="col-xs-12 col-md-6">
-                                  <p class="lead">
-                                      ${{p.price}}</p>
-                              </div>
-                              <div class="col-xs-12 col-md-6">
-                                  <a class="btn btn-success" href=#>Add to cart</a>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-             
-          </div>
+    </div>
+    <div>
+        <br>
+        <br>
+        <br>
+    </div>
 </div>

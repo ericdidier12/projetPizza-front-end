@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-welcome',
@@ -6,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./welcome.component.css']
 })
 export class WelcomeComponent implements OnInit {
-
-  constructor() { }
+  user: User;
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.whoAmITest()
+                    .subscribe( res => this.user = res);
   }
 
 }
