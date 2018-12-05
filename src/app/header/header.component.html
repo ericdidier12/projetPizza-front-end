@@ -39,6 +39,8 @@
           <button type="button" class="btn btn-dark"><a href="#">EN</a></button>
         </li>
 
+        <!--Debut sing-In and sing up-->
+        <ng-container *ngIf="!connecterUser"> 
         <li class="nav-item" routerLinkActive="active">
           <a routerLink="login">
             <button type="button" class="btn"> Sign In</button>
@@ -47,8 +49,15 @@
         &nbsp;
         <li class="nav-item"> 
             <button type="button" class="btn"> Sign up</button>   
-        </li>
-
+        </li>  
+      </ng-container>
+     <!-- Fin sing-In and sing up-->
+      
+    <ng-container *ngIf="connecterUser">
+      <li>
+        <a href="#" (click)="logout()">Logout ({{connecterUser.username}})</a>
+      </li>
+    </ng-container>
       </ul>
     </div>
 

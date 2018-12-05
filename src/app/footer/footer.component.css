@@ -1,11 +1,12 @@
 .footer {
-    posi
+    position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
     background-color: #202d4c;
     text-align: center;
     color: #FFFFFF;
+    margin-top: 10px;
 }
 
 @media (max-width: 800px) {

@@ -1,3 +1,4 @@
+import { IIngredient } from './../../models/IIngredient';
 import { Component, OnInit } from '@angular/core';
 import { IPizza } from 'src/app/models/ipizza';
 import { PizzaService } from 'src/app/services/pizza.service';
@@ -9,7 +10,8 @@ import { PizzaService } from 'src/app/services/pizza.service';
 })
 export class PizzaListComponent implements OnInit {
   listPizza: IPizza[];
-
+  listIngredient : IIngredient [];
+  
   constructor(private _service:PizzaService ) { }
 
   ngOnInit() {
