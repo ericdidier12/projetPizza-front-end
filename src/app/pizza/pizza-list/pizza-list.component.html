@@ -45,7 +45,9 @@
                                         {{p.price}} <span>€</span></p>
                                 </div>
                                 <div class="col-xs-12 col-md-6">
-                                    <a class="btn btn-success" href=#>Add to cart</a>
+                                    <button 
+                                    (click)="addToCart(p)"
+                                    class="btn btn-success" >Add to cart</button>
                                 </div>
                             </div>
                     </div>
