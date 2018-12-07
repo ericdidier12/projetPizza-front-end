@@ -38,7 +38,7 @@
                                     <div *ngFor="let ingredient of p.ingredients">
                                         <p class="card-text"> {{ingredient.name}},</p>
                                     </div>
-                                    <div class="row">
+                                    <!-- <div class="row">
                                         <div class="col-xs-12 col-md-6">
                                             <p class="lead">
                                                 {{p.price}} <span>€</span></p>
@@ -46,7 +46,19 @@
                                         <div class="col-xs-12 col-md-6">
                                             <a class="btn btn-success" href=#>Add to cart</a>
                                         </div>
-                                    </div>
+                                    </div> -->
+
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <p class="lead">
+                                        {{p.price}} <span>€</span></p>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <button 
+                                    (click)="addToCart(p)"
+                                    class="btn btn-success" >Add to cart</button>
+                                </div>
+
                             </div>
                         </div>
                     </div>

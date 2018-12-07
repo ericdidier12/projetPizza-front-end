@@ -51,7 +51,7 @@ export class InscriptionComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    // stop here if form is invalid
+    // stop ici si le formulaire est invalide
     if (this.signUpForm.invalid) {
         return;
     }
@@ -62,15 +62,12 @@ export class InscriptionComponent implements OnInit {
     this.user.adress = this.signUpForm.get('adress').value;
     this.user.password = this.signUpForm.get('password').value;
     this.user.birth_date =new Date(this.signUpForm.get('birth_date').value).toISOString().substring(0,10);
-    // this.signUpForm.get('date').value;
     console.log(this.user);
 
     this.service.attemptSignup(this.user.username, this.user.password, this.user.name, this.user.email, this.user.adress, this.user.adress)
-    .pipe(first()).subscribe(data => { 
-      this.router.navigate(['login']);
+    .pipe(first()).subscribe(data => { console.log("user inscrit"+data)
     }
     );
-      // alert('SUCCESS')
-      // this.router.navigate(['home']);
+       this.router.navigate(['login']);
 }
 }

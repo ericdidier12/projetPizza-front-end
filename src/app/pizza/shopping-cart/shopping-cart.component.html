@@ -19,53 +19,36 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+
+                        <tr *ngFor="let i of cart; let x=index">
                             <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                            <td>Product Name Dada</td>
+                            <td>{{i.pizza.name}}</td>
                             <td>In stock</td>
-                            <td><input class="form-control" type="text" value="1" /></td>
-                            <td class="text-right">124,90 €</td>
-                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
+                              
+                            <td scope="col" class="text-center">
+                                  
+                                    <button (click)="removeQuantity(x)" class="btn btn-sm  btn-success"> <i class="fa fa-minus"></i></button>
+                                       
+                                        <label class="monLabel" >{{i.quantity}}</label>
+                                    
+                                        <button (click)="addQuantity(x)"   class="btn btn-sm  btn-success"> <i class="fa fa-plus"></i></button>
+                            </td>
+
+                            <!-- <td class="text-right"> {{ i.quantity==1 ? i.pizza.price : price }} €</td> -->
+                            <td class="text-right"> {{i.pizza.price * i.quantity }} €</td>
+
+                            <td class="text-right"><button 
+                                (click)="removePizza(x)"  class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
                         </tr>
+                        
                         <tr>
-                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                            <td>Product Name Toto</td>
-                            <td>In stock</td>
-                            <td><input class="form-control" type="text" value="1" /></td>
-                            <td class="text-right">33,90 €</td>
-                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                            <td>Product Name Titi</td>
-                            <td>In stock</td>
-                            <td><input class="form-control" type="text" value="1" /></td>
-                            <td class="text-right">70,00 €</td>
-                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
-                        </tr>
-                        <tr>
-                            <!-- <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>Sub-Total</td>
-                            <td class="text-right">255,90 €</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>Shipping</td>
-                            <td class="text-right">6,90 €</td>
-                        </tr> -->
                         <tr>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td><strong>Total</strong></td>
-                            <td class="text-right"><strong>346,90 €</strong></td>
+                            <td class="text-right"><strong>{{totalPrice}} €</strong></td>
                         </tr>
                     </tbody>
                 </table>
