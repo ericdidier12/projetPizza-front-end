@@ -8,12 +8,10 @@ import { User } from '../models/user';
   styleUrls: ['./welcome.component.css']
 })
 export class WelcomeComponent implements OnInit {
-  user: User;
-  constructor(private authService: AuthService) { }
+ 
+  constructor() { }
 
   ngOnInit() {
-    this.authService.whoAmITest()
-                    .subscribe( res => this.user = res);
   }
 
 }

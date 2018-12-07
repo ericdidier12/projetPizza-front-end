@@ -1,3 +1,4 @@
+import { ICategory } from './../models/ICategory';
 import { IIngredient } from './../models/IIngredient';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -29,8 +30,16 @@ export class PizzaService {
     return this._Http.get<IPizza[]>(this.URL);
   }
 
+  getPizzasByCategory(nameCategory: any): Observable<IPizza[]> {
+    return this._Http.get<IPizza[]>('/api/trieCategorieByName' + '/' + nameCategory);
+  }
+
   public getIngredients(): Observable<IIngredient[]> {
     return this._Http.get<IIngredient[]>('/api/pizzas/ingredients');
+  }
+
+  public getCategories(): Observable<ICategory[]> {
+    return this._Http.get<ICategory[]>('/api/pizzas/categories');
   }
 
   emitPizzaSubject() {

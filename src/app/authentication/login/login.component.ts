@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   }
   
   public onLogins(loginForm :NgForm){
-      console.log("affiche les données soumis"+ loginForm.value);
+      console.log("affiche les données soumis lors de login : "+ loginForm.value);
       this.authService.logins(loginForm.value).subscribe(
         res => {
           this.router.navigate(['']);
@@ -32,20 +32,6 @@ export class LoginComponent implements OnInit {
            this.mode = 1;
         });
     
-  }
-
-
-
-  public onLogin(loginForm: NgForm):void {
-    if(loginForm.valid) {
-      this.authService.login(loginForm.value).subscribe(
-        res => {
-          this.router.navigate(['']);
-        },
-        err=>{
-           this.mode = 1;
-        });
-    }
   }
 
 }

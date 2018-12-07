@@ -66,7 +66,9 @@ export class InscriptionComponent implements OnInit {
     console.log(this.user);
 
     this.service.attemptSignup(this.user.username, this.user.password, this.user.name, this.user.email, this.user.adress, this.user.adress)
-    .pipe(first()).subscribe(data => { console.log("user inscrit" +data)}
+    .pipe(first()).subscribe(data => { 
+      this.router.navigate(['login']);
+    }
     );
       // alert('SUCCESS')
       // this.router.navigate(['home']);

@@ -36,7 +36,7 @@
             <a href="#"><img src="assets/image/uk.png"></a>
         </li>
 
-        <a class="btn btn-success btn-sm ml-3" routerLink="shoppingCart">
+        <a class="btn btn-primary btn-sm ml-3" routerLink="shoppingCart">
             <i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
             &nbsp;
             <span class="badge badge-light">3</span>
@@ -46,8 +46,6 @@
 
         <!--Debut sing-In and sing up-->
         <ng-container *ngIf="!connecterUser"> 
-
-
         &nbsp;
 
         <li class="nav-item" routerLinkActive="active">
@@ -57,20 +55,22 @@
         </li>
         &nbsp;
 
-      </ng-container>
-     <!-- Fin sing-In and sing up-->
-      
-    <ng-container *ngIf="connecterUser">
-      <li>
-        <a href="#" (click)="logout()">Logout ({{connecterUser.username}})</a>
-      </li>
-    </ng-container>
-
         <li class="nav-item" routerLinkActive="active">
           <a routerLink="inscription"> 
             <button type="button" class="btn btn-outline-info"> Sign up</button> 
           </a>  
         </li>
+
+      </ng-container>
+     <!-- Fin sing-In and sing up-->
+      
+    <ng-container *ngIf="connecterUser">
+      <li>
+        <a routerLinkActive="active" class="btn btn-success" href="#" (click)="logout()">Logout ({{connecterUser.username}})</a>
+      </li>
+    </ng-container>
+
+        
 
       </ul>
     </div>
