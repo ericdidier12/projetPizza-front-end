@@ -13,6 +13,7 @@ import { AuthService } from './services/auth.service';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { PizzaModule } from './pizza/pizza.module';
 import { AuthenticationModule } from './authentication/authentication.module';
+import { PizzaResolverService } from './services/PizzaResolver.service';
 
 
 
@@ -51,6 +52,7 @@ const appRoutes : Routes = [
       useClass: AuthInterceptor,
       multi:true
     },
+    PizzaResolverService
    ],
    bootstrap: [
       AppComponent
