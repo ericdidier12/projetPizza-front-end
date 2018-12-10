@@ -57,8 +57,8 @@ export class PizzaListComponent implements OnInit {
       erreur => console.log('ATTENTION Il y a l\'erreur : ' + erreur));
 
       this._service.getCategories().subscribe(
-        resp => this.listCategories = resp
-      );
+        resp => this.listCategories = resp);
+        
       this.cartService.cart.subscribe(
         resp => this.cart = resp,
         erreur => console.log('ATTENTION Il y a l\'erreur : ' + erreur));

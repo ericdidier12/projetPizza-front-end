@@ -1,26 +1,17 @@
+import { IIngredient } from "./IIngredient";
+import { ICategory } from "./ICategory";
+
 export interface IPizza {
-    id: number;
-    name: string;
-    price: number;
-    month_promo: boolean;
-    cat_id: number;
+    id: number; // long 
+    name: string; // ok
+    price: number; // float
+    month_promo: boolean; // ok
     fixed: boolean;
+    cat_id: number;
 
-    category: {
-        id: number,
-        name: string,
-        pizzas: any
-    }
+    number: number;
+    category: ICategory;
+    ingredients: IIngredient[];
 
-    ingredients: [
-        {
-            id: number,
-            name: string,
-            recipe_qunatity: number,
-            stock_quantity: number,
-            unit_price: number,
-            numberIngredient: number,
-            pizzas: IPizza
-        }
-    ]
 }
+
