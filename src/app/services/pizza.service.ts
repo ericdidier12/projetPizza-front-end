@@ -1,9 +1,10 @@
 import { ICategory } from './../models/ICategory';
 import { IIngredient } from './../models/IIngredient';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, Subject, throwError } from 'rxjs';
 import { IPizza } from '../models/ipizza';
+import {catchError, tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -21,18 +22,39 @@ export class PizzaService {
    * </p>
    * </br>
    */
-   pizzasSubject = new Subject<any[]>();
-   private  pizza = [];
+   pizzasSubject = new Subject<IPizza[]>();
+   //private  pizza = [];
+   private  pizza: IPizza[] = [];
    
   constructor(private _Http: HttpClient) { }
   
   getPizzas(): Observable<IPizza[]> {
-    return this._Http.get<IPizza[]>(this.URL);
+    return  this._Http.get<IPizza[]>(this.URL);
   }
 
   getPizzasByCategory(nameCategory: any): Observable<IPizza[]> {
-    return this._Http.get<IPizza[]>('/api/trieCategorieByName' + '/' + nameCategory);
+    return this._Http.get<IPizza[]>('/api/pizzas/trieCategorieByName' + '/' + nameCategory);
   }
+
+  getPizzaBycategory(category: string): Observable<IPizza[]> {
+    return this._Http.get<IPizza[]>('/api/pizzas/trieCategorieByName' + '/' + category)
+      .pipe(catchError(this.handleError));
+  }
+
+  private handleError(err: HttpErrorResponse) {
+
+    let errorMessage = '';
+    if (err.error instanceof ErrorEvent) {
+      errorMessage = `An error occured: ${err.error.message}`;
+    } else {
+      errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`;
+    }
+    console.error(errorMessage);
+    return throwError(errorMessage);
+  }
+
+
+
 
   public getIngredients(): Observable<IIngredient[]> {
     return this._Http.get<IIngredient[]>('/api/pizzas/ingredients');
@@ -42,9 +64,9 @@ export class PizzaService {
     return this._Http.get<ICategory[]>('/api/pizzas/categories');
   }
 
-  emitPizzaSubject() {
-    this.pizzasSubject.next(this.pizza.slice());
-  }
+ 
+  
+
 
 
   

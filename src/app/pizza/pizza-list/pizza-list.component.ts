@@ -1,10 +1,14 @@
+import { AuthService } from './../../services/auth.service';
 import { Ipanier } from './../../models/ipanier';
 import { ICategory } from './../../models/ICategory';
 import { IIngredient } from './../../models/IIngredient';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IPizza } from 'src/app/models/ipizza';
 import { PizzaService } from 'src/app/services/pizza.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
+import { ActivatedRoute } from '@angular/router';
+import { User } from 'src/app/models/user';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -12,22 +16,74 @@ import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
   templateUrl: './pizza-list.component.html',
   styleUrls: ['./pizza-list.component.css']
 })
-export class PizzaListComponent implements OnInit {
+export class PizzaListComponent implements OnInit, OnDestroy {
 
-
-  indexCategorie: string = '';
-  listCategories: ICategory [];
-  cart: Ipanier[] ;
+  isEventByCategorie: boolean = false;
+  listCategories: ICategory[];
+  cart: Ipanier[];
   listPizza: IPizza[];
   listIngredient: IIngredient[];
+  filteredPizzas: IPizza[];
+  connecterUser: User = null;
+  colorChangeEtoile: string;
+  isconnected: boolean = false;
 
-  constructor(private _service: PizzaService, private cartService: ShoppingCartService) { }
+  pizzaSubscription: Subscription;
 
 
+//constructor
+  constructor(private _service: PizzaService, private authService: AuthService, 
+              private cartService: ShoppingCartService,
+               private _route: ActivatedRoute) {
+    this._route.data.subscribe(data => {
+      this.filteredPizzas = data['pizzas'];
+    });
+  }
+
+//ngOnInit
+  ngOnInit() {
+
+    this._route.data.subscribe(
+      data => {
+        this.listPizza = data['pizzas'];
+      }
+    );
+   
+    /*this.pizzaSubscription = this._service.getPizzas().subscribe(
+      resp => this.listPizza = resp,
+      erreur => console.log('ATTENTION Il y a l\'erreur : ' + erreur));
+     this._service.emitPizzaSubject();  
+     */
+
+
+    this._service.getCategories().subscribe(
+      resp => this.listCategories = resp
+    );
+    this.cartService.cart.subscribe(
+      resp => this.cart = resp,
+      erreur => console.log('ATTENTION Il y a l\'erreur : ' + erreur));
+   
+    this.authService.connectedUser.subscribe(
+      user => {
+      this.connecterUser = user,
+        this.isconnected = true;
+        console.log(" class PizzaListComponent affiche connecterUser : " + JSON.stringify(this.connecterUser));
+      },
+      err => this.connecterUser = null
+    );
+
+
+  }
+
+/**
+ * add to cart Pizza
+ * 
+ * @param pizza 
+ */
   addToCart(pizza: IPizza) {
 
     if (!this.cart) {
-      const cart:Ipanier[] = [{ 'pizza': pizza, 'quantity': 1 }];
+      const cart: Ipanier[] = [{ 'pizza': pizza, 'quantity': 1 }];
       this.cartService.setCart(cart);
     }
     else {
@@ -42,7 +98,7 @@ export class PizzaListComponent implements OnInit {
       }
 
       if (found == true) {
-        this.cart[index].quantity=this.cart[index].quantity+1;
+        this.cart[index].quantity = this.cart[index].quantity + 1;
       } else {
         this.cart.push({ 'pizza': pizza, 'quantity': 1 });
       }
@@ -51,23 +107,21 @@ export class PizzaListComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-    this._service.getPizzas().subscribe(
-      resp => this.listPizza = resp,
-      erreur => console.log('ATTENTION Il y a l\'erreur : ' + erreur));
 
-      this._service.getCategories().subscribe(
-        resp => this.listCategories = resp
-      );
-      this.cartService.cart.subscribe(
-        resp => this.cart = resp,
-        erreur => console.log('ATTENTION Il y a l\'erreur : ' + erreur));
-
+  onselectItemCategory() {
+    this.isEventByCategorie = true;
+    if (this.isEventByCategorie) {
+      this.listPizza = this.filteredPizzas;
+      
+    }
 
   }
-      selectItemCategory(event :any){
-      this.indexCategorie = event.target.value;
-      console.log(this.indexCategorie);
+
+  getColors() {
+    return 'style="font-size:24px;color:red';
+  }
+  getColor() {
+    return this.getColors();
   }
 
 

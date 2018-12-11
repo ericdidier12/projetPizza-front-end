@@ -10,6 +10,7 @@ import {tap} from "rxjs/operators";
 export class AuthService {
 
   public connectedUser: EventEmitter<User> = new EventEmitter<User>();
+  
   public
   constructor(private http: HttpClient) { }
 
@@ -29,6 +30,9 @@ export class AuthService {
   public saveToken(jwtToken){
     localStorage.setItem('token', jwtToken);
   }
+  public saveUserInLocaleStorage(userx){
+    localStorage.setItem('user',JSON.stringify(userx));
+  }
 
 
   /**
@@ -40,7 +44,8 @@ export class AuthService {
       this.http.get<User>('/api/user/whoami')
                .subscribe(
                 user => {
-                  console.log( "" + user);
+                  this.saveUserInLocaleStorage(user);
+                  console.log( "methode =>  whoAmITest user = " + JSON.stringify(user));
                   this.connectedUser.emit(user);
                 },
                 err => {
@@ -53,6 +58,7 @@ export class AuthService {
   
   public logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     this.connectedUser.emit(null);
   }
 }

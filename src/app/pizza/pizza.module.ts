@@ -4,13 +4,17 @@ import { PizzaListComponent } from './pizza-list/pizza-list.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { FormsModule } from '@angular/forms';
+import { PizzaResolverService } from '../services/PizzaResolver.service';
+import { AuthService } from '../services/auth.service';
 
 
 
 const appRoutes : Routes = [
-  { path: 'pizzas', component: PizzaListComponent}, 
+  {path: 'pizza', component: PizzaListComponent,
+        resolve: {pizzas: PizzaResolverService}},
+  {path: 'pizza/:category', component: PizzaListComponent,
+                             resolve: {pizzas: PizzaResolverService}},
   { path: 'shoppingCart', component: ShoppingCartComponent},
-
   ];
 
 @NgModule({
@@ -24,5 +28,10 @@ const appRoutes : Routes = [
     FormsModule,
 
   ],
+
+  providers: [
+    PizzaResolverService,
+    AuthService
+  ]
 })
 export class PizzaModule { }

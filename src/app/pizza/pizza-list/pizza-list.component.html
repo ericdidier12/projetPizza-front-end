@@ -15,11 +15,20 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-2">
-            <h5 class="my-4">Category of pizza</h5>
-            <div class="list-group">
-                <a   *ngFor="let categoriePizza of listCategories" href="#" class="list-group-item">{{categoriePizza.name}}</a>
-            </div>
+      
+            <div class="sticky col-lg-2">
+                <h5 class="my-4">Category of pizza</h5>
+                <div class="list-group">
+                    <a href="#" [routerLink]="['/pizza']" 
+                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                        class="list-group-item list-group-item-action">
+                        Toutes
+                    </a>
+                    <a *ngFor="let categoriePizza of listCategories"
+                     [routerLink]="[ '/pizza', categoriePizza.name]"
+                        routerLinkActive="active" class="list-group-item">{{categoriePizza.name}}</a>
+                </div>
+           
         </div>
         <div class="col-lg-10">
             <div id="products" class="row view-group">
@@ -33,6 +42,12 @@
                             <div class="caption card-body">
                                 <h4 class="group card-title inner list-group-item-heading">
                                     {{p.name}}</h4>
+                                
+                                    <ng-container *ngIf="connecterUser">
+                                    <i class= "fa fa-star-o"></i>    
+                                     </ng-container>   
+                                    <!--  <i class="fa fa-star-o" (click)= "getColor()"></i>    -->
+                                    
                                 <p class="group inner list-group-item-text">
                                     <strong><u>Ingredients</u></strong>
                                     <div *ngFor="let ingredient of p.ingredients">
@@ -48,29 +63,27 @@
                                         </div>
                                     </div> -->
 
-                            <div class="row">
-                                <div class="col-xs-12 col-md-6">
-                                    <p class="lead">
-                                        {{p.price}} <span>€</span></p>
-                                </div>
-                                <div class="col-xs-12 col-md-6">
-                                    <button 
-                                    (click)="addToCart(p)"
-                                    class="btn btn-success" >Add to cart</button>
-                                </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-6">
+                                            <p class="lead">
+                                                {{p.price}} <span>€</span></p>
+                                        </div>
+                                        <div class="col-xs-12 col-md-6">
+                                            <button (click)="addToCart(p)" class="btn btn-success">Add to cart</button>
+                                        </div>
 
+                                    </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
         </div>
-    </div>
 
-    <div>
-        <br>
-        <br>
-        <br>
+        <div>
+            <br>
+            <br>
+            <br>
+        </div>
     </div>
-</div>
