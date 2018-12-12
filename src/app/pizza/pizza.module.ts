@@ -6,6 +6,9 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { FormsModule } from '@angular/forms';
 import { PizzaResolverService } from '../services/PizzaResolver.service';
 import { AuthService } from '../services/auth.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { CheckboxModule } from 'primeng/checkbox';
+
 
 
 
@@ -20,12 +23,14 @@ const appRoutes : Routes = [
 @NgModule({
   declarations: [
     PizzaListComponent,
-    ShoppingCartComponent
+    ShoppingCartComponent,
   ],
   imports: [
     RouterModule.forChild(appRoutes),
     CommonModule,
     FormsModule,
+    BrowserAnimationsModule,
+    CheckboxModule
 
   ],
 

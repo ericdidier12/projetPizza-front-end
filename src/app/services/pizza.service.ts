@@ -24,9 +24,9 @@ export class PizzaService {
    * </br>
    */
    pizzasSubject = new Subject<IPizza[]>();
-   //private  pizza = [];
-   private  pizza: IPizza[] = [];
    
+   private  pizza: IPizza[] = [];
+
   constructor(private _Http: HttpClient) { }
   
   getPizzas(): Observable<IPizza[]> {
@@ -42,6 +42,37 @@ export class PizzaService {
       .pipe(catchError(this.handleError));
   }
 
+
+
+ 
+
+  public getIngredients(): Observable<IIngredient[]> {
+    return this._Http.get<IIngredient[]>('/api/pizzas/ingredients')
+    .pipe(catchError(this.handleError));
+  }
+
+  public getCategories(): Observable<ICategory[]> {
+    return this._Http.get<ICategory[]>('/api/pizzas/categories');
+  }
+
+  addPizzaFavorie(id: any): Observable<User> {
+    return this._Http.get<User>(`/api/user/addPizzafavorie/${id}`)
+    .pipe(catchError(this.handleError));
+  }
+
+  deletePizzaFavorie(id: any): Observable<User> {
+    return this._Http.get<User>(`/api/user/deletePizzafavorie/${id}`)
+    .pipe(catchError(this.handleError));
+  }
+
+  getAllIngredients() :Observable<IIngredient[]> {
+    return this._Http.get<IIngredient[]>("api/pizzas/ingredients")
+    .pipe(catchError(this.handleError));
+  }
+
+  getPizzaCustom(selectedValues) :Observable<IPizza> {
+    return this._Http.post<IPizza>("api/pizzas/buildPizzaCustom",selectedValues);
+  }
   private handleError(err: HttpErrorResponse) {
 
     let errorMessage = '';
@@ -53,25 +84,6 @@ export class PizzaService {
     console.error(errorMessage);
     return throwError(errorMessage);
   }
-  
-
-  public getIngredients(): Observable<IIngredient[]> {
-    return this._Http.get<IIngredient[]>('/api/pizzas/ingredients');
-  }
-
-  public getCategories(): Observable<ICategory[]> {
-    return this._Http.get<ICategory[]>('/api/pizzas/categories');
-  }
-
-  addPizzaFavorie(id: any): Observable<User> {
-    return this._Http.get<User>(`/api/user/addPizzafavorie/${id}`);
-  }
-
-  deletePizzaFavorie(id: any): Observable<User> {
-    return this._Http.get<User>(`/api/user/deletePizzafavorie/${id}`);
-  }
-  
-
 
 
   

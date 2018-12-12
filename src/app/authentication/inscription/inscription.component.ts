@@ -3,7 +3,6 @@ import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { InscriptionService } from 'src/app/services/inscription.service';
 import { Router } from '@angular/router';
 import { UserInscription } from 'src/app/models/user-inscription';
-import { pipe } from '@angular/core/src/render3';
 import { first } from 'rxjs/operators';
 
 @Component({

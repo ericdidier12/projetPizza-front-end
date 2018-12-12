@@ -1,34 +1,58 @@
 <div class="container">
     <br /><br />
     <div class="row">
-        <div class="col-lg-9 my-2">
+        <div class="col">
             <div class="pull-right">
                 <div class="btn-group">
-                    <button class="btn btn-info" id="list">
-                        List View
+                    <!-- Pizza Custom -->
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                        Pizza Custom
                     </button>
-                    <button class="btn btn-danger" id="grid">
-                        Grid View
-                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Select you ingredients</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                        <h3 class="first">Ingredient</h3>
+                                        <div class="ui-g" style="width:250px;margin-bottom:10px">
+                                            <div class="ui-g-12"  *ngFor="let ingredient of listIngredients"><p-checkbox name="group1" value="{{ingredient.id}}" label=" {{ingredient.name}} " [(ngModel)]="selectedValues" inputId="{{ingredient.name}}"></p-checkbox></div>
+                                           <!--  Selected Ingredients: <span *ngFor="let city of selectedValues" style="margin-right:10px">{{city}}</span>-->
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary"(click) = "onAllIngredientsSelected()" routerLink="/pizza"  > Add to cart </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- fin  Pizza Custom -->
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
-      
-            <div class="sticky col-lg-2">
-                <h5 class="my-4">Category of pizza</h5>
-                <div class="list-group">
-                    <a href="#" [routerLink]="['/pizza']" 
-                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-                        class="list-group-item list-group-item-action">
-                        Toutes
-                    </a>
-                    <a *ngFor="let categoriePizza of listCategories"
-                     [routerLink]="[ '/pizza', categoriePizza.name]"
-                        routerLinkActive="active" class="list-group-item">{{categoriePizza.name}}</a>
-                </div>
-           
+
+        <div class="sticky col-lg-2">
+            <h5 class="my-4">Category of pizza</h5>
+            <div class="list-group">
+                <a href="#" [routerLink]="['/pizza']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                    class="list-group-item list-group-item-action">
+                    Toutes
+                </a>
+                <a *ngFor="let categoriePizza of listCategories" [routerLink]="[ '/pizza', categoriePizza.name]"
+                    routerLinkActive="active" class="list-group-item">{{categoriePizza.name}}</a>
+            </div>
+
         </div>
         <div class="col-lg-10">
             <div id="products" class="row view-group">
@@ -42,17 +66,17 @@
                             <div class="caption card-body">
                                 <h4 class="group card-title inner list-group-item-heading">
                                     {{p.name}}</h4>
-            
-                                    <div *ngIf ="currentUser" (click)= "onListPizza(i)">
-                                            
-                                            <i  *ngIf= "! p.isfavorite " class= "fa fa-star-o" style="font-size:20px"></i> 
-                                          
-                                            <i *ngIf= "p.isfavorite " class= "fa fa-star" style="font-size:20px;color:red"></i>
-                                    </div>
 
-                                    
-                                    <!--  <i class="fa fa-star-o" (click)= "getColor()"></i>    -->
-                                    
+                                <div *ngIf="currentUser" (click)="onListPizza(i)">
+
+                                    <i *ngIf="! p.isfavorite " class="fa fa-star-o" style="font-size:20px"></i>
+
+                                    <i *ngIf="p.isfavorite " class="fa fa-star" style="font-size:20px;color:red"></i>
+                                </div>
+
+
+                                <!--  <i class="fa fa-star-o" (click)= "getColor()"></i>    -->
+
                                 <p class="group inner list-group-item-text">
                                     <strong><u>Ingredients</u></strong>
                                     <div *ngFor="let ingredient of p.ingredients">

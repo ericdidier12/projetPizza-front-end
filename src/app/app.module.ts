@@ -43,7 +43,8 @@ const appRoutes : Routes = [
       ReactiveFormsModule,
       RouterModule.forRoot(appRoutes),
       PizzaModule,
-      AuthenticationModule
+      AuthenticationModule,
+     // BrowserAnimationsModule
    ],
    providers: [
     AuthService,

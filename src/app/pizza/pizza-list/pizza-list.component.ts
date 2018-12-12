@@ -8,7 +8,9 @@ import { PizzaService } from 'src/app/services/pizza.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/models/user';
-import { Subscription } from 'rxjs';
+import {CheckboxModule} from 'primeng/checkbox';
+import {  NgForm } from '@angular/forms';
+
 
 
 @Component({
@@ -22,12 +24,16 @@ export class PizzaListComponent implements OnInit {
   listCategories: ICategory[];
   cart: Ipanier[];
   listPizza: IPizza[];
-  listIngredient: IIngredient[];
+  listIngredients: IIngredient[];
   filteredPizzas: IPizza[];
   connecterUser: User = null;
   colorChangeEtoile: string;
   isconnected: boolean = false;
-  currentUser : User ;
+  currentUser: User;
+  selectedValues: number[] = [];
+  pizzaCustom :IPizza;
+ 
+  
 
   pizzaFavorite: IPizza[];
 
@@ -66,16 +72,23 @@ export class PizzaListComponent implements OnInit {
       },
       err => this.connecterUser = null
     );
-    
+
     this.currentUser = this.authService.getUserConnect();
-    if(this.currentUser){
+    if (this.currentUser) {
       this.pizzaFavorite = this.currentUser.pizzas;
       this.listPizza.forEach(element => {
         element.isfavorite = this.isFavorite(element.id)
       });
     }
-    
 
+    this._service.getAllIngredients().subscribe(
+      data => {
+          this.listIngredients =data ;
+      },
+      error => {
+
+      }
+    );
   }
 
   /**
@@ -112,7 +125,7 @@ export class PizzaListComponent implements OnInit {
 
 
   isFavorite(id) {
-    if(this.pizzaFavorite && this.pizzaFavorite.find(p => p.id === id)){
+    if (this.pizzaFavorite && this.pizzaFavorite.find(p => p.id === id)) {
       return true;
     }
     else {
@@ -122,20 +135,20 @@ export class PizzaListComponent implements OnInit {
 
 
   onListPizza(index) {
-    
-    if(this.listPizza[index].isfavorite) {
+
+    if (this.listPizza[index].isfavorite) {
       this._service.deletePizzaFavorie(this.listPizza[index].id).subscribe(
         dataUser => {
           this.updateStatusFavory(dataUser, index);
         });
     } else {
       this._service.addPizzaFavorie(this.listPizza[index].id).subscribe(
-            dataUser => {
-              this.updateStatusFavory(dataUser, index);
-            });
+        dataUser => {
+          this.updateStatusFavory(dataUser, index);
+        });
     }
     this.listPizza[index].isfavorite = !this.listPizza[index].isfavorite;
-    console.log(" id_Pizza " + this.listPizza[index].isfavorite );
+    console.log(" id_Pizza " + this.listPizza[index].isfavorite);
   }
 
   private updateStatusFavory(dataUser: User, index: any) {
@@ -143,5 +156,24 @@ export class PizzaListComponent implements OnInit {
     localStorage.setItem('user', JSON.stringify(dataUser));
     this.pizzaFavorite = dataUser.pizzas;
     this.listPizza[index].isfavorite = this.isFavorite(this.listPizza[index].id);
+  }
+
+  
+  onAllIngredientsSelected(){
+    this._service.getPizzaCustom(this.selectedValues).subscribe(
+      data => {
+        this.pizzaCustom = data ;
+      
+        console.log("Ma pizzaCustom crée :" + JSON.stringify(this.pizzaCustom) );
+        if( this.pizzaCustom){
+          this.addToCart(this.pizzaCustom) ;
+        }
+        
+      },
+      error => {
+          console.log("error  your url_PizzaCustomFrotendAngular Is  bad");
+      }
+    );
+   console.log( this.selectedValues);
   }
 }
