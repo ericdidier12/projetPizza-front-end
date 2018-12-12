@@ -5,6 +5,7 @@ export interface IPizza {
     month_promo: boolean;
     cat_id: number;
     fixed: boolean;
+    isfavorite: boolean;
 
     category: {
         id: number,

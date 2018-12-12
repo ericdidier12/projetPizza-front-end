@@ -32,7 +32,7 @@
         </div>
         <div class="col-lg-10">
             <div id="products" class="row view-group">
-                <div class="item col-xs-4 col-lg-4" *ngFor="let p of listPizza">
+                <div class="item col-xs-4 col-lg-4" *ngFor="let p of listPizza, let i = index">
                     <div *ngIf="p.fixed == true">
                         <br />
                         <div class="thumbnail card">
@@ -42,10 +42,15 @@
                             <div class="caption card-body">
                                 <h4 class="group card-title inner list-group-item-heading">
                                     {{p.name}}</h4>
-                                
-                                    <ng-container *ngIf="connecterUser">
-                                    <i class= "fa fa-star-o"></i>    
-                                     </ng-container>   
+            
+                                    <div *ngIf ="currentUser" (click)= "onListPizza(i)">
+                                            
+                                            <i  *ngIf= "! p.isfavorite " class= "fa fa-star-o" style="font-size:20px"></i> 
+                                          
+                                            <i *ngIf= "p.isfavorite " class= "fa fa-star" style="font-size:20px;color:red"></i>
+                                    </div>
+
+                                    
                                     <!--  <i class="fa fa-star-o" (click)= "getColor()"></i>    -->
                                     
                                 <p class="group inner list-group-item-text">

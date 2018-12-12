@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './pizza-list.component.html',
   styleUrls: ['./pizza-list.component.css']
 })
-export class PizzaListComponent implements OnInit, OnDestroy {
+export class PizzaListComponent implements OnInit {
 
   isEventByCategorie: boolean = false;
   listCategories: ICategory[];
@@ -27,20 +27,21 @@ export class PizzaListComponent implements OnInit, OnDestroy {
   connecterUser: User = null;
   colorChangeEtoile: string;
   isconnected: boolean = false;
+  currentUser : User ;
 
-  pizzaSubscription: Subscription;
+  pizzaFavorite: IPizza[];
 
 
-//constructor
-  constructor(private _service: PizzaService, private authService: AuthService, 
-              private cartService: ShoppingCartService,
-               private _route: ActivatedRoute) {
+  //constructor
+  constructor(private _service: PizzaService, private authService: AuthService,
+    private cartService: ShoppingCartService,
+    private _route: ActivatedRoute) {
     this._route.data.subscribe(data => {
       this.filteredPizzas = data['pizzas'];
     });
   }
 
-//ngOnInit
+  //ngOnInit
   ngOnInit() {
 
     this._route.data.subscribe(
@@ -48,12 +49,6 @@ export class PizzaListComponent implements OnInit, OnDestroy {
         this.listPizza = data['pizzas'];
       }
     );
-   
-    /*this.pizzaSubscription = this._service.getPizzas().subscribe(
-      resp => this.listPizza = resp,
-      erreur => console.log('ATTENTION Il y a l\'erreur : ' + erreur));
-     this._service.emitPizzaSubject();  
-     */
 
 
     this._service.getCategories().subscribe(
@@ -62,24 +57,32 @@ export class PizzaListComponent implements OnInit, OnDestroy {
     this.cartService.cart.subscribe(
       resp => this.cart = resp,
       erreur => console.log('ATTENTION Il y a l\'erreur : ' + erreur));
-   
+
     this.authService.connectedUser.subscribe(
       user => {
-      this.connecterUser = user,
-        this.isconnected = true;
-        console.log(" class PizzaListComponent affiche connecterUser : " + JSON.stringify(this.connecterUser));
+        this.connecterUser = user,
+
+          console.log(" class PizzaListComponent affiche connecterUser : " + JSON.stringify(this.connecterUser));
       },
       err => this.connecterUser = null
     );
-
+    
+    this.currentUser = this.authService.getUserConnect();
+    if(this.currentUser){
+      this.pizzaFavorite = this.currentUser.pizzas;
+      this.listPizza.forEach(element => {
+        element.isfavorite = this.isFavorite(element.id)
+      });
+    }
+    
 
   }
 
-/**
- * add to cart Pizza
- * 
- * @param pizza 
- */
+  /**
+   * add to cart Pizza
+   * 
+   * @param pizza 
+   */
   addToCart(pizza: IPizza) {
 
     if (!this.cart) {
@@ -108,22 +111,37 @@ export class PizzaListComponent implements OnInit, OnDestroy {
   }
 
 
-  onselectItemCategory() {
-    this.isEventByCategorie = true;
-    if (this.isEventByCategorie) {
-      this.listPizza = this.filteredPizzas;
-      
+  isFavorite(id) {
+    if(this.pizzaFavorite && this.pizzaFavorite.find(p => p.id === id)){
+      return true;
     }
-
-  }
-
-  getColors() {
-    return 'style="font-size:24px;color:red';
-  }
-  getColor() {
-    return this.getColors();
+    else {
+      return false;
+    }
   }
 
 
+  onListPizza(index) {
+    
+    if(this.listPizza[index].isfavorite) {
+      this._service.deletePizzaFavorie(this.listPizza[index].id).subscribe(
+        dataUser => {
+          this.updateStatusFavory(dataUser, index);
+        });
+    } else {
+      this._service.addPizzaFavorie(this.listPizza[index].id).subscribe(
+            dataUser => {
+              this.updateStatusFavory(dataUser, index);
+            });
+    }
+    this.listPizza[index].isfavorite = !this.listPizza[index].isfavorite;
+    console.log(" id_Pizza " + this.listPizza[index].isfavorite );
+  }
 
+  private updateStatusFavory(dataUser: User, index: any) {
+    localStorage.removeItem('user');
+    localStorage.setItem('user', JSON.stringify(dataUser));
+    this.pizzaFavorite = dataUser.pizzas;
+    this.listPizza[index].isfavorite = this.isFavorite(this.listPizza[index].id);
+  }
 }

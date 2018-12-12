@@ -5,6 +5,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, Subject, throwError } from 'rxjs';
 import { IPizza } from '../models/ipizza';
 import {catchError, tap} from 'rxjs/operators';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -52,9 +53,7 @@ export class PizzaService {
     console.error(errorMessage);
     return throwError(errorMessage);
   }
-
-
-
+  
 
   public getIngredients(): Observable<IIngredient[]> {
     return this._Http.get<IIngredient[]>('/api/pizzas/ingredients');
@@ -64,7 +63,13 @@ export class PizzaService {
     return this._Http.get<ICategory[]>('/api/pizzas/categories');
   }
 
- 
+  addPizzaFavorie(id: any): Observable<User> {
+    return this._Http.get<User>(`/api/user/addPizzafavorie/${id}`);
+  }
+
+  deletePizzaFavorie(id: any): Observable<User> {
+    return this._Http.get<User>(`/api/user/deletePizzafavorie/${id}`);
+  }
   
 
 

@@ -40,12 +40,12 @@ export class AuthService {
    */
   public whoAmITest() {
     if (localStorage.getItem('token') != null){
-      console.log("=> whoAmI() => Affiche le token du localStorage => " + localStorage.getItem('token'));
+      // console.log("=> whoAmI() => Affiche le token du localStorage => " + localStorage.getItem('token'));
       this.http.get<User>('/api/user/whoami')
                .subscribe(
                 user => {
                   this.saveUserInLocaleStorage(user);
-                  console.log( "methode =>  whoAmITest user = " + JSON.stringify(user));
+                  // console.log( "methode =>  whoAmITest user = " + JSON.stringify(user));
                   this.connectedUser.emit(user);
                 },
                 err => {
@@ -55,10 +55,13 @@ export class AuthService {
     }
   }
 
-  
   public logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.connectedUser.emit(null);
+  }
+
+  public getUserConnect():User {
+    return JSON.parse(localStorage.getItem('user'));
   }
 }

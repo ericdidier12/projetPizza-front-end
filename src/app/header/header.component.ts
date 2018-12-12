@@ -18,8 +18,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.authService.connectedUser.subscribe(
-      user=> { this.connecterUser = user, 
-       console.log(" class HeaderComponent affiche connecterUser : " + JSON.stringify (this.connecterUser) ) ;
+      user=> { this.connecterUser = user;
       },
       err=>this.connecterUser = null
     );
