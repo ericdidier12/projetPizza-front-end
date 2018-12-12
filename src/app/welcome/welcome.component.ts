@@ -14,7 +14,15 @@ export class WelcomeComponent implements OnInit {
 
   ngOnInit() {
 
-   this.cartService.mergeIt();
+   //this.cartService.mergeIt();
+   if (localStorage.getItem('token') != null && 
+   (JSON.parse(localStorage.getItem('isConnect'))==false || localStorage.getItem('isConnect') === null) ) {
+this.cartService.sendCard();
+this.cartService.getNewCard();
+
+localStorage.setItem('isConnect', JSON.stringify(true));
+}
+return this.cartService.isConnected;
  
   }
 

@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { IPizza } from 'src/app/models/ipizza';
 import { PizzaService } from 'src/app/services/pizza.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
+import { InscriptionService } from 'src/app/services/inscription.service';
 
 
 @Component({
@@ -43,12 +44,16 @@ export class PizzaListComponent implements OnInit {
 
       if (found == true) {
         this.cart[index].quantity=this.cart[index].quantity+1;
-      } else {
-        this.cart.push({ 'pizza': pizza, 'quantity': 1 });
-      }
-      this.cartService.setCart(this.cart);
 
+      } else {
+        this.cart.push({ 'pizza': pizza, 'quantity': 1 });      }
+      this.cartService.setCart(this.cart);
     }
+
+    if (localStorage.getItem('token') != null){
+    this.cartService.addOneOrderLineInDB({'pizza': pizza, 'quantity': 1  })
+  }
+
   }
 
   ngOnInit() {

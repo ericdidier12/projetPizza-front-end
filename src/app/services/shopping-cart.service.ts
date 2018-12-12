@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Ipanier } from '../models/ipanier';
-import { Observable, BehaviorSubject, merge, observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { Observable, BehaviorSubject} from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { IPizza } from '../models/ipizza';
 
 
 @Injectable({
@@ -24,33 +25,46 @@ export class ShoppingCartService {
     this._cart.next(cart);
   }
 
+  removeOrderLineInDB(entry:Ipanier){
+    this.http.post<any>('http://localhost:8080/api/card/remove',entry).subscribe(
+      res => console.log('inside postmehtod of sub.function', res),//only objects
+      (error:HttpErrorResponse)=>console.log(error.error));
+  }
 
+  addOneOrderLineInDB(entry:Ipanier){
+    this.http.post<any>('http://localhost:8080/api/card/addOne',entry).subscribe(
+      res => console.log('inside postmehtod of sub.function', res),//only objects
+      (error:HttpErrorResponse)=>console.log(error.error)); 
+  }
 
-  sendCard():Observable<any> {
-    const yo:string ="yo"
-    console.log(yo);
-    return this.http.post<any>('http://localhost:8080/api/card/getCard', JSON.parse(localStorage.getItem('pizzaCart'))) ;    
+  deleteOrderLineInDB(entry:Ipanier){
+    this.http.post<any>('http://localhost:8080/api/card/deleteOne',entry).subscribe(
+      res => console.log('inside postmehtod of sub.function', res),//only objects
+      (error:HttpErrorResponse)=>console.log(error.error));
+  }
+
+  sendCard() {
+ 
+     this.http.post<any>('http://localhost:8080/api/card/getCard',JSON.parse(localStorage.getItem('pizzaCart'))).subscribe(
+      res => console.log('inside postmehtod of sub.function', res),//only objects
+      (error:HttpErrorResponse)=>console.log(error.error));
     }
 
-  getNewCard() {
-    this.http.get<Ipanier[]>('http://localhost:8080/api/card/mergeCard')
-      .subscribe(newPanier => localStorage.setItem('pizzaCart', JSON.stringify(newPanier))
+
+  getNewCard(){
+     this.http.get<Ipanier[]>('http://localhost:8080/api/card/mergeCard')
+      .subscribe(newPanier => this.setCart(newPanier)
       );
     }
 
-
-
-    mergeIt():Observable<Boolean>{
-      if (localStorage.getItem('token') != null && 
-              (JSON.parse(localStorage.getItem('isConnect'))==false || localStorage.getItem('isConnect') === null) ) {
-        this.sendCard();
-       // this.getNewCard();
-                
-        localStorage.setItem('isConnect', JSON.stringify(true));
+    
+  getQuantity():number{
+    let quantity:number=0;
+    let newC:Ipanier[]=JSON.parse(localStorage.getItem('pizzaCart')) 
+    for (let i = 0; i <newC.length; i++) {
+      quantity=quantity+newC[i].quantity;
     }
-    return this.isConnected;
+    return quantity;
   }
-
-
 
 }

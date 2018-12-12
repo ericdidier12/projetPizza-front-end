@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { UserInscription } from '../models/user-inscription';
 
 @Injectable({
   providedIn: 'root'
@@ -15,4 +14,8 @@ export class InscriptionService {
     console.log('attempt signup');
     return this.http.post<any>('http://localhost:8080/api/signup', userinfo);
     }
+
+
+
+
 }

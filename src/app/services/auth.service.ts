@@ -4,6 +4,7 @@ import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs/";
 import {tap} from "rxjs/operators";
 import { ShoppingCartService } from './shopping-cart.service';
+import { Ipanier } from '../models/ipanier';
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +57,7 @@ export class AuthService {
   public logout(): void {
     localStorage.removeItem('token');
     localStorage.setItem('isConnect', JSON.stringify(false));
+    this.cartService.setCart([]);
     this.connectedUser.emit(null);
   }
 }

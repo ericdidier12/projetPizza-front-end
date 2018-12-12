@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit {
  cart:Ipanier[];
  indice:number;
 
-  constructor(private authService : AuthService, private cartService:ShoppingCartService) { }
+  constructor(private authService: AuthService, private cartService:ShoppingCartService) { }
 
   ngOnInit() {
     this.authService.connectedUser.subscribe(
@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
     );
 
     this.cartService.cart.subscribe(
-      resp => {this.cart = resp; this.indice=this.cart.length},
+      resp => {this.cart = resp; this.indice=this.cartService.getQuantity()},
       erreur => console.log('ATTENTION Il y a l\'erreur : ' + erreur));
   }
   
