@@ -3,6 +3,8 @@ import {User} from "../models/user";
 import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs/";
 import {tap} from "rxjs/operators";
+import { ShoppingCartService } from './shopping-cart.service';
+import { Ipanier } from '../models/ipanier';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +12,9 @@ import {tap} from "rxjs/operators";
 export class AuthService {
 
   public connectedUser: EventEmitter<User> = new EventEmitter<User>();
-  
-  public
-  constructor(private http: HttpClient) { }
+
+
+  constructor(private http: HttpClient, private cartService:ShoppingCartService) { }
 
   public logins(user: User): Observable<HttpResponse<Object>> {
     return this.http.post('/api/login', user, {observe: 'response'}).pipe(
@@ -47,6 +49,7 @@ export class AuthService {
                   this.saveUserInLocaleStorage(user);
                   // console.log( "methode =>  whoAmITest user = " + JSON.stringify(user));
                   this.connectedUser.emit(user);
+                  
                 },
                 err => {
                   console.log(" imposible d'avoir le retour de cette utilisateur  ");
@@ -58,6 +61,8 @@ export class AuthService {
   public logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.setItem('isConnect', JSON.stringify(false));
+    this.cartService.setCart([]);
     this.connectedUser.emit(null);
   }
 

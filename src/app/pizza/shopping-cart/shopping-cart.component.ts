@@ -15,10 +15,12 @@ export class ShoppingCartComponent implements OnInit {
   totalPrice:number;
 
   
-  
   addQuantity(index:number){
    this.cart[index].quantity=this.cart[index].quantity+1;
    this.cartService.setCart(this.cart);
+   if (localStorage.getItem('token') != null){
+     this.cartService.addOneOrderLineInDB( this.cart[index]);
+   }
 
   }
 
@@ -26,19 +28,30 @@ export class ShoppingCartComponent implements OnInit {
     if(this.cart[index].quantity!=1){
     this.cart[index].quantity= this.cart[index].quantity-1;
     this.cartService.setCart(this.cart);
+    if (localStorage.getItem('token') != null){
+      this.cartService.deleteOrderLineInDB( this.cart[index]);
+    }
     }
    }
 
    removePizza(index:number){
+   
+    
+    if (localStorage.getItem('token') != null){
+      this.cartService.removeOrderLineInDB( this.cart[index]);
+    } 
     this.cart.splice(index,1);
     this.cartService.setCart(this.cart);
-
    }
 
    calculTotalPrice():number{
      this.totalPrice = 0 ;
      this.cart.forEach(element => this.totalPrice+=element.pizza.price*element.quantity);
      return this.totalPrice;
+   }
+
+   click(){
+    alert('Commande payer')
    }
 
   ngOnInit() {

@@ -14,4 +14,8 @@ export class InscriptionService {
     console.log('attempt signup');
     return this.http.post<any>('http://localhost:8080/api/signup', userinfo);
     }
+
+
+
+
 }

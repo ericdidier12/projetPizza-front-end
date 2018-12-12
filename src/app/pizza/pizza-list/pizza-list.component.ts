@@ -6,12 +6,14 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IPizza } from 'src/app/models/ipizza';
 import { PizzaService } from 'src/app/services/pizza.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
+
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/models/user';
 import {CheckboxModule} from 'primeng/checkbox';
 import {  NgForm } from '@angular/forms';
 
 
+import { InscriptionService } from 'src/app/services/inscription.service';
 
 @Component({
   selector: 'app-pizza-list',
@@ -116,12 +118,16 @@ export class PizzaListComponent implements OnInit {
       if (found == true) {
         this.cart[index].quantity = this.cart[index].quantity + 1;
       } else {
-        this.cart.push({ 'pizza': pizza, 'quantity': 1 });
-      }
+        this.cart.push({ 'pizza': pizza, 'quantity': 1 });      }
       this.cartService.setCart(this.cart);
-
     }
+
+    if (localStorage.getItem('token') != null){
+    this.cartService.addOneOrderLineInDB({'pizza': pizza, 'quantity': 1  })
   }
+
+  }
+
 
 
   isFavorite(id) {
@@ -133,6 +139,7 @@ export class PizzaListComponent implements OnInit {
     }
   }
 
+     
 
   onListPizza(index) {
 
