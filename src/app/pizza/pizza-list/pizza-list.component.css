@@ -3,3 +3,41 @@
     position: sticky;
     top: 0;
 }
+.img-responsive {
+    max-width: auto; /* or to whatever you want here */
+    max-height: auto; /* or to whatever you want here */
+  }
+
+      /* start of desktop styles */
+
+@media screen and (max-width: 991px) {
+    /* start of large tablet styles */
+    .img-responsive {
+      min-width: 70%;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    /* start of medium tablet styles */
+    /* Adding a fixed/percentage min-width could ensure that the image doesn't get too small */
+    .img-responsive {
+      min-width: 30%;
+    }
+}
+
+@media screen and (max-width: 479px) {
+    /* start of phone styles */
+    /* It's possible to hide the image if the screen becomes too small */
+    .img-responsive {
+      min-width: 10%;
+    }
+}
+
+.h4, h4 {
+    font-size: 1.5rem;
+    color: #a5ba4f;
+}
+
+.row {
+margin-bottom: 30px;
+}

@@ -1,3 +1,4 @@
+import { IngredientListComponent } from './ingredient-list/ingredient-list.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PizzaListComponent } from './pizza-list/pizza-list.component';
@@ -12,18 +13,21 @@ import { CheckboxModule } from 'primeng/checkbox';
 
 
 
+
 const appRoutes : Routes = [
   {path: 'pizza', component: PizzaListComponent,
         resolve: {pizzas: PizzaResolverService}},
   {path: 'pizza/:category', component: PizzaListComponent,
                              resolve: {pizzas: PizzaResolverService}},
   { path: 'shoppingCart', component: ShoppingCartComponent},
+  { path: 'ingredient', component: IngredientListComponent},
   ];
 
 @NgModule({
   declarations: [
     PizzaListComponent,
     ShoppingCartComponent,
+    IngredientListComponent,
   ],
   imports: [
     RouterModule.forChild(appRoutes),

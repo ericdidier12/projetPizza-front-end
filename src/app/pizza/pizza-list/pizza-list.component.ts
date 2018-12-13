@@ -7,13 +7,14 @@ import { IPizza } from 'src/app/models/ipizza';
 import { PizzaService } from 'src/app/services/pizza.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import {CheckboxModule} from 'primeng/checkbox';
 import {  NgForm } from '@angular/forms';
-
+import { RouterModule, Routes } from '@angular/router';
 
 import { InscriptionService } from 'src/app/services/inscription.service';
+import { routerNgProbeToken } from '@angular/router/src/router_module';
 
 @Component({
   selector: 'app-pizza-list',
@@ -43,7 +44,7 @@ export class PizzaListComponent implements OnInit {
   //constructor
   constructor(private _service: PizzaService, private authService: AuthService,
     private cartService: ShoppingCartService,
-    private _route: ActivatedRoute) {
+    private _route: ActivatedRoute, private router: Router) {
     this._route.data.subscribe(data => {
       this.filteredPizzas = data['pizzas'];
     });
@@ -174,6 +175,8 @@ export class PizzaListComponent implements OnInit {
         console.log("Ma pizzaCustom crée :" + JSON.stringify(this.pizzaCustom) );
         if( this.pizzaCustom){
           this.addToCart(this.pizzaCustom) ;
+        //  this.router.navigate(['/shoppingCart']);
+         //  this.router.navigate(['/pizza']);
         }
         
       },

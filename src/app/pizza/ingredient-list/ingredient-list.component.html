@@ -1,0 +1,50 @@
+<div class="container">
+  <br /><br />
+  <div class="row">
+      <div class="col-5">
+           <h2><u>INGRÉDIENT</u> </h2>
+        </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div id="products" class="row view-group">
+        <div class="item col-xs-4 col-lg-4" *ngFor="let ingredient of listIngredients, let i = index">
+          <!--- 'DO'  possibilities to check if the stock ingredient  is empty(color Red) or available(color green) -->
+            <br />
+            <div class="thumbnail card">
+              <div class="img-event">
+                <img class="group list-group-image img-fluid  img-responsive" src="assets/ingredientImage/{{ingredient.name}}.jpg"
+                  alt="{{ingredient.name}}" />
+              </div>
+              <div class="caption card-body">
+                <h4 class="group card-title inner list-group-item-heading">
+                  {{ingredient.name}}</h4>
+                <!--  <i class="fa fa-star-o" (click)= "getColor()"></i>    -->
+
+                <div class="row">
+                  <div class="col-xs-12 col-md-6">
+                    <p class="lead">
+                      {{ingredient.unit_price}} <span>€</span></p>
+                  </div>
+                  <div class="col-xs-12 col-md-6">
+                    <button (click)="addToCart(ingredient)" class="btn btn-success">Add to cart</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+      
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <br>
+      <br>
+      <br>
+    </div>
+  </div>
+
+
+
+  

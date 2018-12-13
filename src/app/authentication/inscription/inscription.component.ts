@@ -31,11 +31,11 @@ export class InscriptionComponent implements OnInit {
   ngOnInit() {
 
     this.signUpForm = this.fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['',[Validators.required, Validators.email]],
-      username: ['', [Validators.required, Validators.minLength(4)]],
-      adress: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(4)]], 
+      username: ['', [Validators.required, Validators.minLength(3)]],
+      adress: ['', [Validators.required, Validators.minLength(4)]],
+      password: ['', [Validators.required, Validators.minLength(3)]], 
       birth_date: [''],
 
      

@@ -5,36 +5,56 @@
             <div class="pull-right">
                 <div class="btn-group">
                     <!-- Pizza Custom -->
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                        Pizza Custom
-                    </button>
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                    <!-- Button trigger modal-->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCart">Launch
+                        modal</button>
+                    <!-- Modal: modalCart -->
+                    <div class="modal fade" id="modalCart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                         aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-dialog" role="document">
                             <div class="modal-content">
+                                <!--Header-->
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">Select you ingredients</h5>
+                                    <h4 class="modal-title" id="myModalLabel">Select you ingredients</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
+                                        <span aria-hidden="true">×</span>
                                     </button>
                                 </div>
+                                <!--Body-->
                                 <div class="modal-body">
-                                        <h3 class="first">Ingredient</h3>
-                                        <div class="ui-g" style="width:250px;margin-bottom:10px">
-                                            <div class="ui-g-12"  *ngFor="let ingredient of listIngredients"><p-checkbox name="group1" value="{{ingredient.id}}" label=" {{ingredient.name}} " [(ngModel)]="selectedValues" inputId="{{ingredient.name}}"></p-checkbox></div>
-                                           <!--  Selected Ingredients: <span *ngFor="let city of selectedValues" style="margin-right:10px">{{city}}</span>-->
-                                        </div>
+                                        
+                                    <table class="table table-hover">
+                                            <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Ingredient name</th>
+                                                        <th>Price</th>
+                                                        <th>choice</th>
+                                                    </tr>
+                                                </thead>
+                                        <tbody  *ngFor="let ingredient of listIngredients">
+                                            <tr>
+                                                <th scope="row">=></th>
+                                                <td>{{ingredient.name}}</td>
+                                                <td>{{ingredient.unit_price}} €</td>
+                                                <td>
+                                                    <p-checkbox name="group1" value="{{ingredient.id}}" 
+                                                        [(ngModel)]="selectedValues" inputId="{{ingredient.name}}"></p-checkbox>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
                                 </div>
+                                <!--Footer-->
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary"(click) = "onAllIngredientsSelected()" > Add to cart </button>
+                                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+                                    <button class="btn btn-primary"  (click)="onAllIngredientsSelected()" [routerLink]="['/pizza']">Add to cart</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- Modal: modalCart -->
                     <!-- fin  Pizza Custom -->
                 </div>
             </div>
@@ -61,7 +81,8 @@
                         <br />
                         <div class="thumbnail card">
                             <div class="img-event">
-                                <img class="group list-group-image img-fluid" src="assets/image/imagePiza.jpg" alt="" />
+                                <img class="group list-group-image img-fluid  img-responsive" src="assets/image/imagePiza.jpg"
+                                    alt="{{p.name}}" />
                             </div>
                             <div class="caption card-body">
                                 <h4 class="group card-title inner list-group-item-heading">
@@ -73,7 +94,6 @@
 
                                     <i *ngIf="p.isfavorite " class="fa fa-star" style="font-size:20px;color:red"></i>
                                 </div>
-
 
                                 <!--  <i class="fa fa-star-o" (click)= "getColor()"></i>    -->
 

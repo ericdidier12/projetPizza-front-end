@@ -43,16 +43,14 @@ export class PizzaService {
   }
 
 
-
- 
-
   public getIngredients(): Observable<IIngredient[]> {
     return this._Http.get<IIngredient[]>('/api/pizzas/ingredients')
     .pipe(catchError(this.handleError));
   }
 
   public getCategories(): Observable<ICategory[]> {
-    return this._Http.get<ICategory[]>('/api/pizzas/categories');
+    return this._Http.get<ICategory[]>('/api/pizzas/categories')
+    .pipe(catchError(this.handleError));
   }
 
   addPizzaFavorie(id: any): Observable<User> {
@@ -71,7 +69,8 @@ export class PizzaService {
   }
 
   getPizzaCustom(selectedValues) :Observable<IPizza> {
-    return this._Http.post<IPizza>("api/pizzas/buildPizzaCustom",selectedValues);
+    return this._Http.post<IPizza>("api/pizzas/buildPizzaCustom",selectedValues)
+    .pipe(catchError(this.handleError));
   }
   private handleError(err: HttpErrorResponse) {
 
