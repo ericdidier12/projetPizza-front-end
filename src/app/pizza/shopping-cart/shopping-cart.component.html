@@ -23,7 +23,9 @@
                         <tr *ngFor="let i of cart; let x=index">
                             <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
                             <td>{{i.pizza.name}}</td>
-                            <td>In stock</td>
+                            <td><div *ngFor="let ingredient of i.pizza.ingredients">
+                                <p class="card-text"> {{ingredient.name}},</p>
+                            </div></td>
                               
                             <td scope="col" class="text-center">
                                   

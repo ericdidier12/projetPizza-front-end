@@ -93,11 +93,7 @@ export class PizzaListComponent implements OnInit {
     );
   }
 
-  /**
-   * add to cart Pizza
-   * 
-   * @param pizza 
-   */
+
   addToCart(pizza: IPizza) {
 
     if (!this.cart) {

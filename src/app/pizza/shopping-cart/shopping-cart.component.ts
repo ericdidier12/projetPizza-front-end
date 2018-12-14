@@ -11,8 +11,8 @@ export class ShoppingCartComponent implements OnInit {
 
   constructor( private cartService: ShoppingCartService) { }
 
-  cart:Ipanier[] =[];
-  totalPrice:number;
+  private cart:Ipanier[] =[];
+  private totalPrice:number;
 
   
   addQuantity(index:number){

@@ -46,15 +46,8 @@ export class ShoppingCartService {
   sendCard() {
  
      this.http.post<any>('http://localhost:8080/api/card/getCard',JSON.parse(localStorage.getItem('pizzaCart'))).subscribe(
-      res => console.log('inside postmehtod of sub.function', res),//only objects
+      newPanier => this.setCart(newPanier),//only objects
       (error:HttpErrorResponse)=>console.log(error.error));
-    }
-
-
-  getNewCard(){
-     this.http.get<Ipanier[]>('http://localhost:8080/api/card/mergeCard')
-      .subscribe(newPanier => this.setCart(newPanier)
-      );
     }
 
     

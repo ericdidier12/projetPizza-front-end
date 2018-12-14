@@ -12,10 +12,10 @@ import { first } from 'rxjs/operators';
 })
 export class InscriptionComponent implements OnInit {
 
-  signUpForm: FormGroup;
+  private signUpForm: FormGroup;
   submitted = false;
 
-  user: UserInscription ={
+  private user: UserInscription ={
     name: '',
     email: '',
     username: '',
